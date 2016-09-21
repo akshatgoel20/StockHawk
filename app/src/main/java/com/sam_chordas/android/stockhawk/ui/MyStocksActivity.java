@@ -119,8 +119,8 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                     return;
                   } else {
                     // Add the stock to DB
-                    mServiceIntent.putExtra("tag", "add");
-                    mServiceIntent.putExtra("symbol", input.toString());
+                    mServiceIntent.putExtra(getResources().getString(R.string.string_tag), getResources().getString(R.string.string_add));
+                    mServiceIntent.putExtra(getResources().getString(R.string.string_symbol), input.toString());
                     startService(mServiceIntent);
                   }
                 }
@@ -141,7 +141,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     if (isConnected){
       long period = 3600L;
       long flex = 10L;
-      String periodicTag = "periodic";
+      String periodicTag = getResources().getString(R.string.string_periodic);
 
       // create a periodic task to pull stocks once every hour after the app has been opened. This
       // is so Widget data stays up to date.
