@@ -40,7 +40,9 @@ public class Utils {
                 if (count == 1) {
                     jsonObject = jsonObject.getJSONObject(KEY_RESULTS)
                             .getJSONObject(KEY_QUOTE);
-                    batchOperations.add(buildBatchOperation(jsonObject));
+                    ContentProviderOperation obj = buildBatchOperation(jsonObject);
+                    if (obj != null)
+                        batchOperations.add(obj);
                 } else {
                     resultsArray = jsonObject.getJSONObject(KEY_RESULTS).getJSONArray(KEY_QUOTE);
 
