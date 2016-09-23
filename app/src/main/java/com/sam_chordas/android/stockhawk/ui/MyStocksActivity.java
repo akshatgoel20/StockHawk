@@ -8,6 +8,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sam_chordas.android.stockhawk.R;
@@ -52,6 +54,8 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   private Context mContext;
   private Cursor mCursor;
   boolean isConnected;
+  private CoordinatorLayout coordinatorLayout;
+  private TextView textNoNetwork;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +70,19 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     setContentView(R.layout.activity_my_stocks);
     // The intent service is for executing immediate pulls from the Yahoo API
     // GCMTaskService can only schedule tasks, they cannot execute immediately
+    coordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_content);
+    textNoNetwork = (TextView) findViewById(R.id.text_no_network);
     mServiceIntent = new Intent(this, StockIntentService.class);
     if (savedInstanceState == null){
       // Run the initialize task service so that some stocks appear upon an empty database
       mServiceIntent.putExtra(getResources().getString(R.string.string_tag), getResources().getString(R.string.string_init));
       if (isConnected){
         startService(mServiceIntent);
+        textNoNetwork.setVisibility(View.GONE);
       } else{
+        textNoNetwork.setVisibility(View.VISIBLE);
         networkToast();
+
       }
     }
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
