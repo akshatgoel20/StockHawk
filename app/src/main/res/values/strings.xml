@@ -27,6 +27,7 @@
     <string name="string_symbol_found" translatable="false">Success! added new Symbol</string>
     <string name="stock_quote_already_saved" translatable="false">This stock is already saved!</string>
     <string name="string_set_background_resource" translatable="false">setBackgroundResource</string>
+    <string name="error_batch_insert" translatable="false">Error applying batch insert</string>
 
 
 </resources>

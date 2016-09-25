@@ -135,7 +135,7 @@ public class StockTaskService extends GcmTaskService {
                     else
                         result = GcmNetworkManager.RESULT_FAILURE;
                 } catch (RemoteException | OperationApplicationException e) {
-                    Log.e(LOG_TAG, "Error applying batch insert", e);
+                    Log.e(LOG_TAG, mContext.getResources().getString(R.string.error_batch_insert), e);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

@@ -28,6 +28,7 @@ public class MyDetailActivity extends AppCompatActivity implements LoaderManager
     private LineSet lineSet;
     int maxRange;
     int minRange;
+    int step ;
     private static final int CURSOR_LOADER_ID = 0;
 
     @Override
@@ -57,6 +58,7 @@ public class MyDetailActivity extends AppCompatActivity implements LoaderManager
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mCursor = data;
         findRange(mCursor);
+
         fillLineSet();
     }
 
@@ -89,6 +91,7 @@ public class MyDetailActivity extends AppCompatActivity implements LoaderManager
         }
         maxRange = Math.round(Collections.max(mArrayList));
         minRange = Math.round(Collections.min(mArrayList));
+        step = maxRange-Math.round((maxRange-minRange)/2);
         if (minRange > 100)
             minRange = minRange - 100;
 
@@ -98,7 +101,7 @@ public class MyDetailActivity extends AppCompatActivity implements LoaderManager
         mCursor.moveToFirst();
         for (int i = 0; i < mCursor.getCount(); i++) {
             float price = Float.parseFloat(mCursor.getString(mCursor.getColumnIndex(QuoteColumns.BIDPRICE)));
-            lineSet.addPoint("test " + i, price);
+            lineSet.addPoint(String.valueOf(i), price);
             mCursor.moveToNext();
         }
         lineSet.setColor(getResources().getColor(R.color.line_set))
