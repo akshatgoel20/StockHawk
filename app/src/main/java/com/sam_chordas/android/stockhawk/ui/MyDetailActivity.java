@@ -92,17 +92,20 @@ public class MyDetailActivity extends AppCompatActivity implements LoaderManager
         maxRange = Math.round(Collections.max(mArrayList));
         minRange = Math.round(Collections.min(mArrayList));
         step = maxRange-Math.round((maxRange-minRange)/2);
-        if (minRange > 100)
-            minRange = minRange - 100;
+        if(minRange>100){
+            lineChartView.setAxisBorderValues(100,1000);
+        }
 
     }
 
     private void fillLineSet() {
         mCursor.moveToFirst();
         for (int i = 0; i < mCursor.getCount(); i++) {
-            float price = Float.parseFloat(mCursor.getString(mCursor.getColumnIndex(QuoteColumns.BIDPRICE)));
-            lineSet.addPoint(String.valueOf(i), price);
-            mCursor.moveToNext();
+            if(i%5==0) {
+                float price = Float.parseFloat(mCursor.getString(mCursor.getColumnIndex(QuoteColumns.BIDPRICE)));
+                lineSet.addPoint(String.valueOf(i), price);
+                mCursor.moveToNext();
+            }
         }
         lineSet.setColor(getResources().getColor(R.color.line_set))
                 .setDotsStrokeThickness(Tools.fromDpToPx(2))
