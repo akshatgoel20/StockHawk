@@ -120,9 +120,14 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                                 public void onInput(MaterialDialog dialog, CharSequence input) {
                                     // On FAB click, receive user input. Make sure the stock doesn't already exist
                                     // in the DB and proceed accordingly
+                                    String in = input.toString() ;
+                                    int spacePos = in.indexOf(" ");
+                                    if (spacePos > 0) {
+                                        in= in.substring(0, spacePos);
+                                    }
                                     Cursor c = getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
                                             new String[]{QuoteColumns.SYMBOL}, QuoteColumns.SYMBOL + "= ?",
-                                            new String[]{input.toString()}, null);
+                                            new String[]{in}, null);
                                     if (c.getCount() != 0) {
                                         Toast toast =
                                                 Toast.makeText(MyStocksActivity.this, R.string.stock_quote_already_saved,
@@ -133,7 +138,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                                     } else {
                                         // Add the stock to DB
                                         mServiceIntent.putExtra(getResources().getString(R.string.string_tag), getResources().getString(R.string.string_add));
-                                        mServiceIntent.putExtra(getResources().getString(R.string.string_symbol), input.toString());
+                                        mServiceIntent.putExtra(getResources().getString(R.string.string_symbol), in);
                                         startService(mServiceIntent);
                                     }
                                 }
